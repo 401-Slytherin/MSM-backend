@@ -13,7 +13,6 @@ class CardModel(models.Model):
     card_num = models.TextField(blank = True)
     promotional = models.BooleanField()
 
-
     CONDITION_CHOICES = (
         ('4', 'Excellent'),
         ('3', 'Good'),
