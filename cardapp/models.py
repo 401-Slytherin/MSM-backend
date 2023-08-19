@@ -1,10 +1,9 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 class CardModel(models.Model):
     card_name = models.TextField()
-    owner = models.ForeignKey(
-        get_user_model(), on_delete=models.CASCADE, null=True, blank=True
-    )
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to = 'images/')
     condition = models.CharField(max_length = 1, choices=CONDITION_CHOICES)
     category = models.TextField(blank=True)
@@ -21,4 +20,13 @@ class CardModel(models.Model):
         ('2', 'Fair'),
         ('1', 'Poor'),
     )
+
+    def __str__(self):
+        return self.location
+    
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:
+    #         SAVE TO MARKETPLACE DATABASE
+
+    #     super().save(*args, **kwargs)
 
