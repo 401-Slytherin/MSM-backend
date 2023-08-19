@@ -5,11 +5,13 @@ class CardModel(models.Model):
     owner = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, null=True, blank=True
     )
+    image = models.ImageField(upload_to = 'images/')
     condition = models.CharField(max_length = 1, choices=CONDITION_CHOICES)
     category = models.TextField(blank=True)
     description = models.TextField(blank=True)
     price = models.TextField(blank=True)
     year_set = models.TextField(blank=True)
+    card_num = models.TextField(blank = True)
     promotional = models.BooleanField()
 
 
