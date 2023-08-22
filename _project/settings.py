@@ -64,7 +64,8 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     # TODO: Fix this
-    # 'rest_framework'
+    'rest_framework',
+    'rest_framework_simplejwt',
 
     # 'authuser', 
 ]
