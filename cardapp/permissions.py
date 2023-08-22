@@ -10,5 +10,4 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if obj.owner is None:
             return True
 
-        # returns True if the owner of the CookieStand is the requester
         return obj.owner == request.user
