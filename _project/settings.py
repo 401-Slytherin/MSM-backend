@@ -61,12 +61,12 @@ INSTALLED_APPS = [
     'accounts',
     'baseapp',
     'cardapp',
-    'selleritemsapp',
 
     # 3rd party apps
-    'rest_framework'
+    # TODO: Fix this
+    # 'rest_framework'
 
-    'authuser', 
+    # 'authuser', 
 ]
 
 MIDDLEWARE = [
