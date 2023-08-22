@@ -4,11 +4,11 @@ from django.contrib.auth.models import UserManager
 from django.utils import timezone
 
 
-class CustomUser(AbstractUser):
-    pass
+# class CustomUser(AbstractUser):
+#     pass
 
-    def __str__(self):
-        return self.username
+#     def __str__(self):
+#         return self.username
 
 class CustomUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
@@ -32,7 +32,7 @@ class CustomUserManager(UserManager):
         extra_fields.setdefault('is_superuser', True)
         return self._create_user(email, password, **extra_fields)
     
-class User(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractUser, PermissionsMixin):
     email = models.EmailField(blank = True, default='', unique=True)
     name = models.CharField(max_length=255, blank=True, default='')
 
