@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'accounts',
     'baseapp',
     'cardapp',
+    'wishlist',
 
     # 3rd party apps
     # TODO: Fix this
