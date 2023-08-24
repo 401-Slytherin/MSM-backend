@@ -13,7 +13,7 @@ class CardModel(models.Model):
 
     card_name = models.TextField()
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
-    image = models.ImageField(upload_to = 'images/')
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
     condition = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(4)], choices=CONDITION_CHOICES)
     category = models.TextField(blank=True)
     description = models.TextField(blank=True)
