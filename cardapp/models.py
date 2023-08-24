@@ -5,10 +5,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class CardModel(models.Model):
 
     CONDITION_CHOICES = (
-        ('4', 'Excellent'),
-        ('3', 'Good'),
-        ('2', 'Fair'),
-        ('1', 'Poor'),
+        (4, 'Excellent'),
+        (3, 'Good'),
+        (2, 'Fair'),
+        (1, 'Poor'),
     )
 
     card_name = models.TextField()
@@ -22,10 +22,9 @@ class CardModel(models.Model):
     card_num = models.TextField(blank = True)
     promotional = models.BooleanField()
 
-    
 
     def __str__(self):
-        return self.location
+        return self.card_name
     
     # def save(self, *args, **kwargs):
     #     if not self.pk:

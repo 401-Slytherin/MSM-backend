@@ -12,8 +12,8 @@ from django.utils import timezone
 
 class CustomUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
-        if not email:
-            raise ValueError("Email is not valid")
+        # if not email:
+        #     raise ValueError("Email is not valid")
         
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
@@ -31,9 +31,10 @@ class CustomUserManager(UserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self._create_user(email, password, **extra_fields)
-    
+
+
 class CustomUser(AbstractUser, PermissionsMixin):
-    email = models.EmailField(blank = True, default='', unique=True)
+    email = models.EmailField(blank=True, default='', unique=True)
     name = models.CharField(max_length=255, blank=True, default='')
 
     is_active = models.BooleanField(default=True)
