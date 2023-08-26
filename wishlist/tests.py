@@ -4,16 +4,16 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from .models import Thing
+from .models import FavouriteItem
 
 
-class ThingFrontTests(TestCase):
+class FavouriteItemTests(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(
             username="tester", email="tester@email.com", password="pass"
         )
 
-        self.thing = Thing.objects.create(
+        self.FaveItem = FavouriteItem.objects.create(
             name="pickle", rating=1, reviewer=self.user, description="pickle description"
         )
 
