@@ -18,7 +18,6 @@ class CardList(ListCreateAPIView):
     #     user = self.request.user
     #     return CardModel.objects.filter(owner=user)
 
-
 class CardListDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
     queryset = CardModel.objects.all()
