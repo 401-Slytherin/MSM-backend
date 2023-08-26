@@ -16,20 +16,20 @@ class CustomUserTests(TestCase):
         )
         self.client.force_authenticate(user=self.user)
 
-    def test_profile_retrieval(self):
-        # print(self.user.id)
-        print(self.client)
-        response = self.client.get('api/profile/' + str(self.user.id))
-        print(response.status_code)
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # self.assertEqual(response.data['username'], self.user.username)
+    # def test_profile_retrieval(self):
+    #     # print(self.user.id)
+    #     print(self.client)
+    #     response = self.client.get('api/profile/' + str(self.user.id))
+    #     print(response.status_code)
+    #     # self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     # self.assertEqual(response.data['username'], self.user.username)
 
-    # def test_string_representation(self):
-    #     self.assertEqual(self.user.get_full_name(), "Ostyantic")
-    #
-    # def test_user_content(self):
-    #     self.assertEqual(f"{self.user.name}", "Ostyantic")
-    #     self.assertEqual(f"{self.user.email}", "tester@email.com")
+    def test_string_representation(self):
+        self.assertEqual(self.user.get_full_name(), "Ostyantic")
+
+    def test_user_content(self):
+        self.assertEqual(f"{self.user.name}", "Ostyantic")
+        self.assertEqual(f"{self.user.email}", "tester@email.com")
         # self.assertEqual(self.thing.rating, 1)
     #
     # def test_list_page_status_code(self):
