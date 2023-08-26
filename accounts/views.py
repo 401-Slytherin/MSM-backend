@@ -1,7 +1,9 @@
-from rest_framework import status
+from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import CustomUserSerializer
+from .models import CustomUser
+
 
 class CustomUserCreate(APIView):
 
@@ -28,3 +30,20 @@ class CustomUserCreate(APIView):
 #     else:
 #         form = CustomUserCreationForm()
 #     return render(request, 'registration/register.html', {'form': form})
+
+
+class ProfileView(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class ProfileUpdateView(generics.UpdateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class UserDeleteView(generics.DestroyAPIView):
+    queryset = CustomUser.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
