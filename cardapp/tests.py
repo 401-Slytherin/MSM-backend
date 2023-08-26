@@ -55,7 +55,7 @@ class CardFrontTests(TestCase):
         response = self.client.get(url)
         # print(response.__dir__())
         card = json.loads(response.content.decode('utf-8'))
-        print(card)# Decode bytes and parse JSON
+        # print(card)# Decode bytes and parse JSON
         self.assertEqual(card["card_name"], "Charizard")
         self.assertEqual(card["condition"], 4)
         # self.assertEqual(card["owner"], 1)
