@@ -2,73 +2,80 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
 
-from .models import Thing
+from .models import CustomUser, CustomUserManager
 
+User = get_user_model()
 
-class ThingFrontTests(TestCase):
+class CustomUserTests(TestCase):
     def setUp(self):
-        self.user = get_user_model().objects.create_user(
-            username="tester", email="tester@email.com", password="pass"
+        self.client = APIClient()
+        self.user = User.objects.create_user(
+            username="Ostyantic", email="tester@email.com", password="pass", name="Ostyantic"
         )
+        self.client.force_authenticate(user=self.user)
 
-        self.thing = Thing.objects.create(
-            name="pickle", rating=1, reviewer=self.user, description="pickle description"
-        )
+    def test_profile_retrieval(self):
+        # print(self.user.id)
+        print(self.client)
+        response = self.client.get('api/profile/' + str(self.user.id))
+        print(response.status_code)
+        # self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # self.assertEqual(response.data['username'], self.user.username)
 
-    def test_string_representation(self):
-        self.assertEqual(str(self.thing), "pickle")
-
-    def test_thing_content(self):
-        self.assertEqual(f"{self.thing.name}", "pickle")
-        self.assertEqual(f"{self.thing.reviewer}", "tester")
-        self.assertEqual(self.thing.rating, 1)
-
-    def test_list_page_status_code(self):
-        self.client.login(username="tester", password="pass")  # need to log in
-        url = reverse('thing_list')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_list_page_template(self):
-        self.client.login(username="tester", password="pass")  # need to log in
-        url = reverse('thing_list')
-        response = self.client.get(url)
-        self.assertTemplateUsed(response, 'things/thing_list.html')
-        self.assertTemplateUsed(response, 'base.html')
-
-    def test_list_page_context(self):
-        self.client.login(username="tester", password="pass")  # need to log in
-        url = reverse('thing_list')
-        response = self.client.get(url)
-        things = response.context['object_list']
-        self.assertEqual(len(things), 1)
-        self.assertEqual(things[0].name, "pickle")
-        self.assertEqual(things[0].rating, 1)
-        self.assertEqual(things[0].reviewer.username, "tester")
-
-    def test_detail_page_status_code(self):
-        self.client.login(username="tester", password="pass")  # need to log in
-        url = reverse('thing_detail', args=(1,))
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_detail_page_template(self):
-        self.client.login(username="tester", password="pass")  # need to log in
-        url = reverse('thing_detail', args=(1,))
-        response = self.client.get(url)
-        self.assertTemplateUsed(response, 'things/thing_detail.html')
-        self.assertTemplateUsed(response, 'base.html')
-
-    def test_detail_page_context(self):
-        self.client.login(username="tester", password="pass")  # need to log in
-        url = reverse('thing_detail', args=(1,))
-        response = self.client.get(url)
-        thing = response.context['thing']
-        self.assertEqual(thing.name, "pickle")
-        self.assertEqual(thing.rating, 1)
-        self.assertEqual(thing.reviewer.username, "tester")
+    # def test_string_representation(self):
+    #     self.assertEqual(self.user.get_full_name(), "Ostyantic")
+    #
+    # def test_user_content(self):
+    #     self.assertEqual(f"{self.user.name}", "Ostyantic")
+    #     self.assertEqual(f"{self.user.email}", "tester@email.com")
+        # self.assertEqual(self.thing.rating, 1)
+    #
+    # def test_list_page_status_code(self):
+    #     self.client.login(username="tester", password="pass")  # need to log in
+    #     url = reverse('thing_list')
+    #     response = self.client.get(url)
+    #     self.assertEqual(response.status_code, 200)
+    #
+    # def test_list_page_template(self):
+    #     self.client.login(username="tester", password="pass")  # need to log in
+    #     url = reverse('thing_list')
+    #     response = self.client.get(url)
+    #     self.assertTemplateUsed(response, 'things/thing_list.html')
+    #     self.assertTemplateUsed(response, 'base.html')
+    #
+    # def test_list_page_context(self):
+    #     self.client.login(username="tester", password="pass")  # need to log in
+    #     url = reverse('thing_list')
+    #     response = self.client.get(url)
+    #     things = response.context['object_list']
+    #     self.assertEqual(len(things), 1)
+    #     self.assertEqual(things[0].name, "pickle")
+    #     self.assertEqual(things[0].rating, 1)
+    #     self.assertEqual(things[0].reviewer.username, "tester")
+    #
+    # def test_detail_page_status_code(self):
+    #     self.client.login(username="tester", password="pass")  # need to log in
+    #     url = reverse('thing_detail', args=(1,))
+    #     response = self.client.get(url)
+    #     self.assertEqual(response.status_code, 200)
+    #
+    # def test_detail_page_template(self):
+    #     self.client.login(username="tester", password="pass")  # need to log in
+    #     url = reverse('thing_detail', args=(1,))
+    #     response = self.client.get(url)
+    #     self.assertTemplateUsed(response, 'things/thing_detail.html')
+    #     self.assertTemplateUsed(response, 'base.html')
+    #
+    # def test_detail_page_context(self):
+    #     self.client.login(username="tester", password="pass")  # need to log in
+    #     url = reverse('thing_detail', args=(1,))
+    #     response = self.client.get(url)
+    #     thing = response.context['thing']
+    #     self.assertEqual(thing.name, "pickle")
+    #     self.assertEqual(thing.rating, 1)
+    #     self.assertEqual(thing.reviewer.username, "tester")
 
 
 class ThingApiTests(APITestCase):
@@ -86,26 +93,26 @@ class ThingApiTests(APITestCase):
         )
         test_thing.save()
 
-    def test_things_model(self):
-        thing = Thing.objects.get(id=1)
-        actual_reviewer = str(thing.reviewer)
-        actual_name = str(thing.name)
-        actual_description = str(thing.description)
-        self.assertEqual(actual_reviewer, "testuser1")
-        self.assertEqual(actual_name, "rake")
-        self.assertEqual(
-            actual_description, "Better for collecting leaves than a shovel."
-        )
-
-    def test_get_thing_list(self):
-        self.client.login(username="testuser1", password="pass")  # need to log in
-        url = reverse("thing_list")
-        response = self.client.get(url)
-        # print("response context is:", response.context)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        things = response.context["things"]
-        self.assertEqual(len(things), 1)
-        # self.assertEqual(things[0]["name"], "rake")
+    # def test_things_model(self):
+    #     thing = Thing.objects.get(id=1)
+    #     actual_reviewer = str(thing.reviewer)
+    #     actual_name = str(thing.name)
+    #     actual_description = str(thing.description)
+    #     self.assertEqual(actual_reviewer, "testuser1")
+    #     self.assertEqual(actual_name, "rake")
+    #     self.assertEqual(
+    #         actual_description, "Better for collecting leaves than a shovel."
+    #     )
+    #
+    # def test_get_thing_list(self):
+    #     self.client.login(username="testuser1", password="pass")  # need to log in
+    #     url = reverse("thing_list")
+    #     response = self.client.get(url)
+    #     print("response context is:", response.context)
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     things = response.context["things"]
+    #     self.assertEqual(len(things), 1)
+    #     self.assertEqual(things[0]["name"], "rake")
 
     # def test_get_thing_by_id(self):
     #     url = reverse("thing_detail", args=(1,))

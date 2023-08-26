@@ -42,5 +42,6 @@ urlpatterns = [
         jwt_views.TokenRefreshView.as_view(),
         name="token_refresh",
     ),
-    path("api/register", CustomUserCreate.as_view(), name="create_user")
+    path("api/register", CustomUserCreate.as_view(), name="create_user"),
+    path("account/", include("accounts.urls")),
 ]
