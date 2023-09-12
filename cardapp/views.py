@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -6,6 +7,14 @@ from rest_framework.generics import (
 from .models import CardModel
 from .permissions import IsOwnerOrReadOnly
 from .serializers import CardSerializer
+
+
+def card_image(request, card_id):
+    card = CardModel.objects.get(pk=card_id)
+    if card is not None:
+        return render(request, "cards/card.html", {'card': card})
+    else:
+        raise Http404('Card does not exist')
 
 
 class CardList(ListCreateAPIView):
