@@ -24,13 +24,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-
 urlpatterns = [
     path("admin/", admin.site.urls),
 
     # TODO: Verify this is needed
     path("api/v1/cards/", include("cardapp.urls")),
-
+    path("", include("cardapp.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path(
         "api/token/",
