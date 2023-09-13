@@ -26,7 +26,7 @@ class CardModel(models.Model):
 
     def __str__(self):
         return self.card_name
-    
+
     # def save(self, *args, **kwargs):
     #     if not self.pk:
     #         SAVE TO MARKETPLACE DATABASE
