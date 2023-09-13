@@ -6,7 +6,7 @@ from .views import CardList, CardListDetail, card_image
 urlpatterns = [
     path("", CardList.as_view(), name="card_list"),
     path("<int:pk>/", CardListDetail.as_view(), name="card_list_detail"),
-    path("media/<int:card_id>", card_image, name="card.html"),
+    path("", card_image, name="card.html"),
     # TODO: create url for card image
 ]
 
