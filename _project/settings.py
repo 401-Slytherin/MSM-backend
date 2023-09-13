@@ -16,7 +16,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-MEDIA_ROOT = 'api/v1/cards/'
+MEDIA_ROOT = ''
 MEDIA_URL = ''
 
 env = environ.Env(
@@ -194,3 +194,5 @@ SIMPLE_JWT = {
 CORS_ORIGIN_WHITELIST = tuple(env.list("ALLOWED_ORIGINS"))
 CORS_ALLOW_ALL_ORIGINS = env.bool("ALLOW_ALL_ORIGINS")
 CSRF_TRUSTED_ORIGINS = tuple(env.list('CSRF_TRUSTED_ORIGINS'))
+
+# APPEND_SLASH=False
